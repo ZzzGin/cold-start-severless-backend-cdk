@@ -1,58 +1,16 @@
 
-# Welcome to your CDK Python project!
+# Serverless Computation Cold Start Benchmark
 
-This is a blank project for Python development with CDK.
+## 1. Description
+'Does serverless make sense?' I keep asking myself this question after spending lots of time reading about AWS Serverless infrastructure. Obviously there are massive exciting features Serverless provides to us, for example 'Pay as you go', 'Infra, Deployment, Config as(is) code', 'Elasticity', 'Business logic focusing' etc. etc. Exciting right? BUT, if read these words again and slower, I feel like someone is hiding something:
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+1. Pay as you go: Nobody says you will save money OK?
+2. Infra, Deployment, Config as(is) code: Automation is great. But without Serverless we have bash right?
+3. Elasticity: Oh BTW, there will be no elasticity if your function needs more than 5 mins. And, yes, sorry about that, if you have LSI enabled, your partition size should be no more than 10GB.
+4. Business logic focusing: Ha! You think you could focuse 100% on your business logic if you migrate to Serverless? YOU ARE WRONG! Come and get your AWS Certs baby.
 
-This project is set up like a standard Python project.  The initialization
-process also creates a virtualenv within this project, stored under the `.venv`
-directory.  To create the virtualenv it assumes that there is a `python3`
-(or `python` for Windows) executable in your path with access to the `venv`
-package. If for any reason the automatic creation of the virtualenv fails,
-you can create the virtualenv manually.
+So, short answer to the question - "It depends." From the learning point of view, Serverless can abstract low-level structures to easily-understandable concepts. But at the same time, it also brings a new set of knowledge into learning scope. To better understand and remember those new rules, you still need to go deeper. From the business point of view, Serverless cannot resolve everything. One of the most pain points, on which I will focus in this project, is cold start latency. This could block latency-sensitive business usecasees from being migrated onto Serverless.
 
-To manually create a virtualenv on MacOS and Linux:
+To better understand Serverless, I plan to build a Serverless website on AWS. And, further more, the content of this website will be a Cold Start Latency Benchmark of language, settings, and provider. 
 
-```
-$ python3 -m venv .venv
-```
-
-After the init process completes and the virtualenv is created, you can use the following
-step to activate your virtualenv.
-
-```
-$ source .venv/bin/activate
-```
-
-If you are a Windows platform, you would activate the virtualenv like this:
-
-```
-% .venv\Scripts\activate.bat
-```
-
-Once the virtualenv is activated, you can install the required dependencies.
-
-```
-$ pip install -r requirements.txt
-```
-
-At this point you can now synthesize the CloudFormation template for this code.
-
-```
-$ cdk synth
-```
-
-To add additional dependencies, for example other CDK libraries, just add
-them to your `setup.py` file and rerun the `pip install -r requirements.txt`
-command.
-
-## Useful commands
-
- * `cdk ls`          list all stacks in the app
- * `cdk synth`       emits the synthesized CloudFormation template
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk docs`        open CDK documentation
-
-Enjoy!
+## 2. Design

@@ -13,7 +13,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
 
-    author="author",
+    author="jnqi",
 
     package_dir={"": "cold_start_benchmark"},
     packages=setuptools.find_packages(where="cold_start_benchmark"),
