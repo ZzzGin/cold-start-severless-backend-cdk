@@ -79,14 +79,16 @@ def lambda_handler(event, context):
             warm_item_data_sum[label] /= warm_item_count
         summaries['Cold'] = cold_item_data_sum
         summaries['Warm'] = warm_item_data_sum
+        summaries['Configs'] = result['Items'][0]['Configs']
         store_data_to_dynamodb(
             summaries,
             result['Items'][0]['Configs']['M']['Runtime']['S'],
-            str(result['Items'][0]['Configs']['M']['MemorySize']['N'])
+            str(result['Items'][0]['Configs']['M']['MemorySize']['N']),
+            result['Items'][0]['Configs']
         )
         
 
-def store_data_to_dynamodb(summary, runtime, memory_size):
+def store_data_to_dynamodb(summary, runtime, memory_size, configs):
     current_timestamp = datetime.datetime.now()
     expiration_timestamp = current_timestamp + datetime.timedelta(days=3*365)
     item = {
@@ -94,6 +96,7 @@ def store_data_to_dynamodb(summary, runtime, memory_size):
         "SK": current_timestamp.timestamp(),
         "Type": "SUMMARY",
         "Summary": summary,
+        "Configs": configs,
         "TTL": expiration_timestamp.timestamp()
     }
     dynamodb_client.put_item(
