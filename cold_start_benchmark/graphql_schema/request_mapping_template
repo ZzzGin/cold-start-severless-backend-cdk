@@ -1,0 +1,19 @@
+ {
+    "version" : "2017-02-28",
+    "operation" : "Query",
+    "query" : {
+        ## Provide a query expression. **
+        "expression": "PK = :PK AND SK BETWEEN :SK_from AND :SK_to",
+        "expressionValues" : {
+            ":PK" : {
+                "S" : "${ctx.args.PK}"
+            },
+            ":SK_from": {
+                "N" : "${ctx.args.SK_from}"
+            },
+            ":SK_to": {
+                "N": "${ctx.args.SK_to}"
+            }
+        }
+    }
+}

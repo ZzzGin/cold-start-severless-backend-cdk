@@ -1,0 +1,17 @@
+﻿schema {
+  query: Query
+}
+
+type ColdStartSummary {
+  PK: String!
+  SK: Float!
+  Summary: AWSJSON
+}
+
+type ColdStartSummaryConnection {
+  items: [ColdStartSummary]
+}
+
+type Query {
+  listColdStartSummariesAfterTimestamp(PK: String!, SK_from: Float!, SK_to: Float!): ColdStartSummaryConnection
+}

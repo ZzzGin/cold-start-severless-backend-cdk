@@ -5,3 +5,4 @@ aws_cdk.aws_s3==1.75.0
 aws_cdk.aws_iam==1.75.0
 aws_cdk.aws_events_targets==1.75.0
 aws_cdk.aws_cloudwatch_actions==1.75.0
+aws_cdk.aws_appsync==1.75.0

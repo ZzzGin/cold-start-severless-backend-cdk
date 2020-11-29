@@ -9,7 +9,8 @@ from aws_cdk import (
     aws_cloudwatch as cloudwatch_,
     aws_cloudwatch_actions as cloudwatch_actions_,
     aws_sns as sns_,
-    aws_sns_subscriptions as sns_subs_
+    aws_sns_subscriptions as sns_subs_,
+    aws_appsync as appsync_
 )
 import json
 
@@ -165,3 +166,18 @@ class ColdStartBenchmarkStack(core.Stack):
         cold_start_summarizer_error_alarm_topic.add_subscription(sns_subs_.EmailSubscription(configs['AlarmNotificationEmailAddress']))
         errorAlarm_summarizer.add_alarm_action(
             cloudwatch_actions_.SnsAction(cold_start_summarizer_error_alarm_topic))
+
+        # GraphQL API
+        graphql_api = appsync_.GraphqlApi(self, "cold_start_benchmark_graphql_api",
+            name="cold_start_benchmark_graphql_api",
+            authorization_config=appsync_.AuthorizationType.IAM,
+            schema=appsync_.Schema.from_asset('./cold_start_benchmark/graphql_schema/schema.graphql'),
+            xray_enabled=True)
+        dynamodb_data_source = graphql_api.add_dynamo_db_data_source(
+            id="cold_start_dynamodb_data_source",
+            table=cold_start_table)
+        dynamodb_data_source.create_resolver(
+            field_name="listColdStartSummariesAfterTimestamp",
+            type_name="Query",
+            request_mapping_template=appsync_.MappingTemplate.from_file('./cold_start_benchmark/graphql_schema/request_mapping_template'),
+            response_mapping_template=appsync_.MappingTemplate.from_file('./cold_start_benchmark/graphql_schema/response_mapping_template'))
