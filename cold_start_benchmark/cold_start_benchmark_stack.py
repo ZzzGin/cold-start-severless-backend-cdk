@@ -170,7 +170,16 @@ class ColdStartBenchmarkStack(core.Stack):
         # GraphQL API
         graphql_api = appsync_.GraphqlApi(self, "cold_start_benchmark_graphql_api",
             name="cold_start_benchmark_graphql_api",
-            authorization_config=appsync_.AuthorizationType.IAM,
+            authorization_config=appsync_.AuthorizationConfig(
+                default_authorization=appsync_.AuthorizationMode(
+                    authorization_type=appsync_.AuthorizationType.API_KEY,
+                    api_key_config=appsync_.ApiKeyConfig(
+                        description="cold_start_benchmark_graphql_api_key",
+                        expires=core.Expiration.after(core.Duration.days(365)),
+                        name="cold_start_benchmark_graphql_api_key"
+                    )
+                )
+            ),
             schema=appsync_.Schema.from_asset('./cold_start_benchmark/graphql_schema/schema.graphql'),
             xray_enabled=True)
         dynamodb_data_source = graphql_api.add_dynamo_db_data_source(

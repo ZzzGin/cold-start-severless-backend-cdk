@@ -6,6 +6,7 @@ type ColdStartSummary {
   PK: String!
   SK: Float!
   Summary: AWSJSON
+  Configs: AWSJSON
 }
 
 type ColdStartSummaryConnection {
