@@ -79,7 +79,6 @@ def lambda_handler(event, context):
             warm_item_data_sum[label] /= warm_item_count
         summaries['Cold'] = cold_item_data_sum
         summaries['Warm'] = warm_item_data_sum
-        summaries['Configs'] = result['Items'][0]['Configs']
         store_data_to_dynamodb(
             summaries,
             result['Items'][0]['Configs']['M']['Runtime']['S'],
