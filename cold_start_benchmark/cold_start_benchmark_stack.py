@@ -10,7 +10,8 @@ from aws_cdk import (
     aws_cloudwatch_actions as cloudwatch_actions_,
     aws_sns as sns_,
     aws_sns_subscriptions as sns_subs_,
-    aws_appsync as appsync_
+    aws_appsync as appsync_,
+    aws_amplify as amplify_
 )
 import json
 
@@ -190,3 +191,15 @@ class ColdStartBenchmarkStack(core.Stack):
             type_name="Query",
             request_mapping_template=appsync_.MappingTemplate.from_file('./cold_start_benchmark/graphql_schema/request_mapping_template'),
             response_mapping_template=appsync_.MappingTemplate.from_file('./cold_start_benchmark/graphql_schema/response_mapping_template'))
+
+        front_end_amplify_app = amplify_.App(self, "cold-start-front-end",
+            app_name="cold_start_front_end",
+            source_code_provider=amplify_.GitHubSourceCodeProvider(
+                owner="ZzzGin",
+                repository="cold-start-frontend-website",
+                oauth_token=core.SecretValue.secrets_manager("zzzgin/github/token",
+                    json_field="zzzgin-github-token")
+            ))
+        master_Branch = front_end_amplify_app.add_branch("master")
+        domain = front_end_amplify_app.add_domain('zzzgin.com')
+        domain.map_sub_domain(master_Branch, 'coldstart')

@@ -44,7 +44,7 @@ To help myself better understand and experience Serverless, I plan to build a Se
 - [x] Caller and test functions 
 - [x] Summarizer
 - [x] GraphQL API
-- [ ] Front end website
+- [x] Front end website
 - [ ] Add more runtimes in AWS
 - [ ] Add Functions in Azure
 - [ ] Add Functions in GCP
