@@ -1,6 +1,10 @@
 
 # Serverless Computation Cold Start Benchmark
 
+## 0. Updating...
+2020-12-03 updated:
+Frontend website based on React/AWS amplify are setup. URL: https://coldstart.zzzgin.com/
+
 ## 1. Description
 'Does serverless make sense?' I keep asking myself this question after spending lots of time reading about AWS Serverless infrastructure. Obviously there are massive exciting features Serverless provides to us, for example 'Pay as you go', 'Infra, Deployment, Config as(is) code', 'Elasticity', 'Business logic focusing' etc. etc. Exciting right? BUT, if read these words again and slower, I feel like someone is hiding something:
 
@@ -44,7 +48,7 @@ To help myself better understand and experience Serverless, I plan to build a Se
 - [x] Caller and test functions 
 - [x] Summarizer
 - [x] GraphQL API
-- [x] Front end website
+- [x] Front end website (https://coldstart.zzzgin.com/)
 - [ ] Add more runtimes in AWS
 - [ ] Add Functions in Azure
 - [ ] Add Functions in GCP
